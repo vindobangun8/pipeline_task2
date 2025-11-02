@@ -98,7 +98,8 @@ MINIO_SECRET_KEY=
 
 ## 5. Data Pipeline Design
 
-![](C:\Users\Hype\Downloads\Data Pipeline Schema.png)
+![Data Pipeline Design](assets/Schema.png)
+
 
 - **Source Layer**
 
