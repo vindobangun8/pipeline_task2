@@ -1,6 +1,11 @@
 # Data Pipeline Documentation
 
+## Prere
+
+
+
 ## 1. Data Source
+
 **Source Systems**: 
 
 - **Source Type** : PostgresSQL Database
@@ -34,6 +39,51 @@
 - **Data Storage :** PostgresSQL (Source , Staging, & Warehouse) , Minio
 - **Container :** Docker
 - **Version Control :** Git
+
+env file
+
+```
+#Sheets Cred
+CRED_PATH = 
+KEY_SPREADSHEET=
+
+# Source
+
+SRC_POSTGRES_DB=
+SRC_POSTGRES_HOST=
+SRC_POSTGRES_USER=
+SRC_POSTGRES_PASSWORD=
+SRC_POSTGRES_PORT=
+
+# Staging
+
+STG_POSTGRES_DB=
+STG_POSTGRES_HOST=
+STG_POSTGRES_USER=
+STG_POSTGRES_PASSWORD=
+STG_POSTGRES_PORT=
+
+# Warehouse
+
+WH_POSTGRES_DB=
+WH_POSTGRES_HOST=
+WH_POSTGRES_USER=
+WH_POSTGRES_PASSWORD=
+WH_POSTGRES_PORT=
+
+#Log
+LOG_POSTGRES_DB=
+LOG_POSTGRES_HOST=
+LOG_POSTGRES_USER=
+LOG_POSTGRES_PASSWORD=
+LOG_POSTGRES_PORT=
+
+#Minio
+MINIO_ACCESS_KEY=
+MINIO_SECRET_KEY=
+```
+
+
 
 ## 4. Requirement Gathering
 | Requirement | Solutions |
