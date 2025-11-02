@@ -16,28 +16,10 @@ def extract_database(table_name: str):
         # create connection to database
         conn = create_engine(f"postgresql+psycopg2://{source['user']}:{source['password']}@{source['host']}:{source['port']}/{source['db']}")
 
-        # Get date from previous process
-        # filter_log = {"step_name": "staging",
-        #            "table_name": table_name,
-        #            "status": "success",
-        #            "component": "load"}
-        # etl_date = read_etl_log(filter_log)
-        etl_date = '1111-01-01'
-
-
-        # # If no previous extraction has been recorded (etl_date is empty), set etl_date to '1111-01-01' indicating the initial load.
-        # # Otherwise, retrieve data added since the last successful extraction (etl_date).
-        # if(etl_date['max'][0] == None):
-        #     etl_date = '1111-01-01'
-        # else:
-        #     etl_date = etl_date[max][0]
-            
-
         # Constructs a SQL query to select all columns from the specified table_name where created_at is greater than etl_date.
         query = f"""
         SELECT * 
         FROM {table_name} 
-        WHERE created_at > '{etl_date}'
         """
 
         #Execute the query with pd.read_sql

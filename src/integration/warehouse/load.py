@@ -1,35 +1,25 @@
 
 from datetime import datetime
-from sqlalchemy import create_engine,inspect
+from sqlalchemy import create_engine
 from pangres import upsert
 
 from src.utils.helper import etl_log, handle_error
-from src.utils.config import staging
+from src.utils.config import warehouse
 
 
-def load_staging(data, table_name: str, source:str):
+def load_warehouse(data, table_name: str, source:str):
     try:
         # create connection to database
-        conn = create_engine(f"postgresql+psycopg2://{staging['user']}:{staging['password']}@{staging['host']}:{staging['port']}/{staging['db']}")
-        
-        # to get primary key of table, for this project all tables have only one primary key
-        inspector = inspect(conn)
-        pk = inspector.get_pk_constraint(table_name)["constrained_columns"][0]
+        conn = create_engine(f"postgresql+psycopg2://{warehouse['user']}:{warehouse['password']}@{warehouse['host']}:{warehouse['port']}/{warehouse['db']}")
 
 
-        # set data index or primary key
-        data = data.set_index(pk)
-        # Do upsert (Update for existing data and Insert for new data)
-        upsert(con = conn,
-                df = data,
-                table_name = table_name,
-                if_row_exists = "update")
-        
+        data.to_sql(table_name, conn, schema='public', if_exists='append', index=False)
+
         component = f"load from {source}"
         #create success log message
         log_msg = {
-                "step" : "staging",
-                f"component": component,
+                "step" : "warehouse",
+                "component": component,
                 "status": "success",
                 "table_name": table_name,
                 "etl_date": datetime.now().strftime("%Y-%m-%d %H:%M:%S")  # Current timestamp
@@ -38,7 +28,7 @@ def load_staging(data, table_name: str, source:str):
     except Exception as e:
         #create fail log message
         log_msg = {
-            "step" : "staging",
+            "step" : "warehouse",
             "component":source,
             "status": "failed",
             "table_name": table_name,

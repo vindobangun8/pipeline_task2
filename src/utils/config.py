@@ -46,8 +46,5 @@ minio ={
 
 sheets = {
 "cred_path": os.getenv("CRED_PATH"),
-"key_spredsheet": os.getenv("KEY_SPREADSHEET")
+"key_spreadsheet": os.getenv("KEY_SPREADSHEET")
 }
-
-list_tables_db = os.getenv("LIST_TABLES_DB").split(",")
-list_tables_sheet = os.getenv("LIST_TABLES_SHEET").split(",")

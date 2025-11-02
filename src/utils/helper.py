@@ -8,6 +8,19 @@ from datetime import datetime
 
 from src.utils.config import minio 
 
+#list table 
+def list_tables (db: dict):
+    query = """
+        SELECT table_name
+        FROM information_schema.tables
+        WHERE table_schema = 'public';
+    """
+    conn = create_engine(f"postgresql+psycopg2://{db['user']}:{db['password']}@{db['host']}:{db['port']}/{db['db']}")
+    table_list = pd.read_sql(query, conn)
+    return table_list
+
+
+
 # Logging 
 def etl_log(log_msg: dict):
 
